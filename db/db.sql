@@ -1,3 +1,3 @@
-DROP DATABASE IF EXISTS workbase;
-CREATE DATABASE workbase;
-USE workbase;
+DROP DATABASE IF EXISTS taskforce;
+CREATE DATABASE taskforce;
+USE taskforce;

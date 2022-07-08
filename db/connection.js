@@ -5,9 +5,9 @@ const db = mysql.createConnection(
         host: 'localhost',
         user: 'root',
         password: 'BootCamp45',
-        database: 'workbase'
+        database: 'taskforce'
     },
-    console.log('connected to workbase')
+    console.log('connected to taskforce')
 )
 
 module.exports = db;

@@ -1,23 +1,19 @@
 INSERT INTO departments (name)
 VALUES
     ('Management'),
-    ('Electronics'),
-    ('Tools'),
-    ('Kitchen'),
-    ('Pharmacy');
+    ('Home Theater'),
+    ('Computers'),
+    ('Appliances'),
+    ('Warehouse');
 
 INSERT INTO roles (title, salary, department_id)
 VALUES
     ('Store Manager', 80000, 1),
-    ('Department Head', 50000, 1),
-    ('TV Salesperson', 25000, 2),
-    ('Phone Salesperson', 25000, 2),
-    ('Tools Salesperson', 25000, 3),
-    ('Tools Servicer', 30000, 3),
-    ('Kitchen Salesperson', 25000, 4),
-    ('Appliance Repairman', 40000, 4),
-    ('Pharmacist', 75000, 5),
-    ('Pharmacy Cashier', 38000, 5);
+    ('Department Supervisor', 50000, 1),
+    ('Home Theater specialist', 25000, 2),
+    ('computers specialist', 25000, 2),
+    ('appliance specialist', 25000, 3),
+    ('Warehouse specialist', 25000, 4)
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES
