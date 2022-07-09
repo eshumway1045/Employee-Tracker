@@ -1,3 +1,6 @@
+const db = require('../db/connection');
+const inquirer = require ('inquirer');
+
 const roleQuestions = [
     {
         type: 'list',
@@ -8,7 +11,7 @@ const roleQuestions = [
     },
     {
         type: 'input',
-        name: 'addRoleTitle',
+        name: 'addTitle',
         message: "What would you like the role to be called?",
         when: ({ roleList }) => {
             if (roleList === 'Add a Role') {
@@ -20,7 +23,7 @@ const roleQuestions = [
     },
     {
         type: 'number',
-        name: 'addRoleSalary',
+        name: 'addSalary',
         message: "What is the salary of this role?",
         when: ({ roleList }) => {
             if (roleList === 'Add a Role') {
@@ -32,7 +35,7 @@ const roleQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'addRoleDepartment',
+        name: 'addDepartment',
         message: "What is the Department does this role belong to?",
         choices: () => {
             return new Promise ((resolve, reject) => {
@@ -60,7 +63,7 @@ const roleQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'updateRole',
+        name: 'update',
         message: 'Which Role would you like to modify',
         choices: () => {
             return new Promise ((resolve, reject) => {
@@ -88,7 +91,7 @@ const roleQuestions = [
     },
     {
         type: 'list',
-        name: 'updateRoleChoice',
+        name: 'updateChoice',
         message: 'What did you want to update?',
         choices: ['Title', 'Salary', 'Department'],
         when: ({updateRole}) => {
@@ -101,7 +104,7 @@ const roleQuestions = [
     },
     {
         type: 'input',
-        name: 'updateRoleTitle',
+        name: 'updateTitle',
         message: 'What should the new Title be?',
         default:  ({ updateRole }) => {
             if (updateRole.title) {
@@ -120,7 +123,7 @@ const roleQuestions = [
     },
     {
         type: 'number',
-        name: 'updateRoleSalary',
+        name: 'updateSalary',
         message: "What should the new Salary be?",
         default: ({updateRole}) => {
            if (updateRole.salary) {
@@ -139,7 +142,7 @@ const roleQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'updateRoleDepartment',
+        name: 'updateDepartment',
         message: 'What Department should this Role belong to?',
         choices: () => {
             return new Promise ((resolve, reject) => {
@@ -167,7 +170,7 @@ const roleQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'deleteRole',
+        name: 'delete',
         message: 'Which Role would you like to REMOVE?',
         choices: () => {
             return new Promise ((resolve, reject) => {
