@@ -22,6 +22,6 @@ db.connect(err => {
     app.listen(PORT, () => {
         console.log(`Server Running on port ${PORT}`);
         // this is more for ease of use, it will start the script right after connecting to the database
-        new Construction().initialize();
+        new Build().initialize();
     });
 });
