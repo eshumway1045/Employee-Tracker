@@ -9,7 +9,7 @@ const { employQuestions: eQues } = require('./src/employQuestions');
 
 class Build {
 
-    initialize() {
+    begin() {
         console.clear();
         inquirer.prompt(startUp)
             .then(responses => {
@@ -39,7 +39,7 @@ class Build {
             .then((responses) => {
                 console.log(responses);
                 if (responses.employList === "Go Back") {
-                    this.initialize();
+                    this.begin();
                 }
                 if (responses.employList === "View Employees") {
                     fetch('http://localhost:3001/api/employees', {
@@ -135,7 +135,7 @@ class Build {
             .then(responses => {
                 console.log(responses);
                 if (responses.roleList === "Go Back") {
-                    this.initialize();
+                    this.begin();
                 }
                 if (responses.roleList === "View Roles") {
                     fetch('http://localhost:3001/api/roles', {
@@ -199,7 +199,7 @@ class Build {
             .then(responses => {
                 console.log(responses);
                 if (responses.departmentList === "Go Back") {
-                    this.initialize();
+                    this.begin();
                 }
                 if (responses.departmentList === "View Departments") {
                     fetch('http://localhost:3001/api/departments', {
