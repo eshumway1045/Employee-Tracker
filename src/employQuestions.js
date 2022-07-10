@@ -6,61 +6,58 @@ const employQuestions = [
         type: 'list',
         name: 'employList',
         message: 'What would you like to do?',
-        choices: ['View Employees', 'View employee by Manager', 'View Employee by Department', 'Add employee', 'Update employee', 'Remove Employee', 'Go Back'],
-        default: 'Veiw Employees'
+        choices: ['View Employees', 'View by Manager', 'View by Department', 'Add Employee', 'Update Employee', 'Delete Employee',  'Go Back'],
+        default: 'View Employees'
     },
-
     {
         type: 'rawlist',
-        name: 'byManager',
-        message: 'Which manager would you like to see the Employees of?',
+        name: 'viewByManager',
+        message: 'Which manager do you want to see the Employees for?',
         choices: () => {
-            return new Promise((resolve, reject) => {
-                let choicesArr = [];
-                let sql = `SELECT * FROM employees`;
-                db.query(sql, (err, res) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    for (let i = 0; i < res.length; i++) {
-                        choicesArr.push({ value: { id: res[i].id, full_name: res[i].first_name + ' ' + res[i].last_name }, name: res[i].first_name + ' ' + res[i].last_name });
+            return new Promise ((resolve, reject) => {
+            let choicesArr = [];
+            let sql = `SELECT * FROM employees`;
+            db.query(sql, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                    for (let i = 0 ; i < res.length ; i++ ) {
+                        choicesArr.push({ value: {id: res[i].id, full_name: res[i].first_name + ' ' + res[i].last_name}, name:res[i].first_name + ' ' + res[i].last_name});
                     }
                     return resolve(choicesArr);
                 })
             })
         },
-        when: ({ employList }) => {
-            if (employList === 'View Employees by Manager') {
+        when: ({employList}) => {
+            if (employList === 'View by Manager') {
                 return true;
             } else {
                 return false;
             }
         }
-
-
     },
     {
         type: 'rawlist',
-        name: 'byDepartment',
-        message: 'Which Department would you like to see the Employees for?',
+        name: 'viewByDepartment',
+        message: 'Which Department do you want to see the Employees for?',
         choices: () => {
-            return new Promise((resolve, reject) => {
-                let choicesArr = [];
-                let sql = `SELECT * FROM departments`;
-                db.query(sql, (err, res) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    for (let i = 0; i < res.length; i++) {
-                        choicesArr.push({ value: { id: res[i].id, name: res[i].name }, name: res[i].name });
+            return new Promise ((resolve, reject) => {
+            let choicesArr = [];
+            let sql = `SELECT * FROM departments`;
+            db.query(sql, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                    for (let i = 0 ; i < res.length ; i++ ) {
+                        choicesArr.push({ value: {id:res[i].id, name: res[i].name}, name:res[i].name});
                     }
                     return resolve(choicesArr);
                 });
-
+                
             });
         },
-        when: ({ employList }) => {
-            if (employList === 'View Employees by Department') {
+        when: ({employList}) => {
+            if (employList === 'View by Department') {
                 return true;
             } else {
                 return false;
@@ -69,8 +66,8 @@ const employQuestions = [
     },
     {
         type: 'input',
-        name: 'employFirstName',
-        message: 'Enter Employees first name',
+        name: 'addEmployFirstName',
+        message: "What is the Employee's First Name?",
         when: ({ employList }) => {
             if (employList === 'Add Employee') {
                 return true;
@@ -78,39 +75,37 @@ const employQuestions = [
                 return false;
             }
         }
-
     },
     {
         type: 'input',
-        name: 'employLastName',
-        message: 'Enter Employees last name',
+        name: 'addEmployLastName',
+        message: "What is the Employee's Last Name?",
         when: ({ employList }) => {
             if (employList === 'Add Employee') {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
         }
     },
     {
         type: 'rawlist',
-        name: 'addRole',
-        message: 'What is the employees role?',
+        name: 'addEmployRole',
+        message: "What is the Employee's Role?",
         choices: () => {
-            return new Promise((resolve, reject) => {
-                let choicesArr = [];
-                let sql = `SELECT * FROM roles`;
-                db.query(sql, (err, res) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    for (let i = 0; i < res.length; i++) {
-                        choicesArr.push({ name: res[i].title, value: { id: res[i].id, title: res[i].title } });
+            return new Promise ((resolve, reject) => {
+            let choicesArr = [];
+            let sql = `SELECT * FROM roles`;
+            db.query(sql, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                    for (let i = 0 ; i < res.length ; i++ ) {
+                        choicesArr.push({ name: res[i].title, value:{id: res[i].id, title:res[i].title}});
                     }
                     return resolve(choicesArr);
                 })
-
+                
             })
         },
         when: ({ employList }) => {
@@ -120,26 +115,25 @@ const employQuestions = [
                 return false;
             }
         }
-
     },
     {
         type: 'rawlist',
-        name: 'addManager',
-        message: "Who is this manager of this employee?",
+        name: 'addEmployManager',
+        message: "Who is this Employee's Manager?",
         choices: () => {
-            return new Promise((resolve, reject) => {
-                let choicesArr = ['NULL'];
-                let sql = `SELECT * FROM employees`;
-                db.query(sql, (err, res) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    for (let i = 0; i < res.length; i++) {
-                        choicesArr.push({ value: { id: res[i].id, full_name: res[i].first_name + ' ' + res[i].last_name }, name: res[i].first_name + ' ' + res[i].last_name });
+            return new Promise ((resolve, reject) => {
+            let choicesArr = ['NULL'];
+            let sql = `SELECT * FROM employees`;
+            db.query(sql, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                    for (let i = 0 ; i < res.length ; i++ ) {
+                        choicesArr.push({ value: {id: res[i].id, full_name: res[i].first_name + ' ' + res[i].last_name}, name:res[i].first_name + ' ' + res[i].last_name});
                     }
                     return resolve(choicesArr);
                 })
-
+                
             })
         },
         when: ({ employList }) => {
@@ -149,29 +143,28 @@ const employQuestions = [
                 return false;
             }
         }
-
     },
     {
         type: 'rawlist',
-        name: 'updateEmploy',
-        message: 'What employee do you want to update?',
+        name: 'updateEmployee',
+        message: 'Which Employee would you like to update?',
         choices: () => {
-            return new Promise((resolve, reject) => {
-                let choicesArr = [];
-                let sql = `SELECT * FROM employees`;
-                db.query(sql, (err, res) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    for (let i = 0; i < res.length; i++) {
-                        choicesArr.push({ value: { id: res[i].id, first_name: res[i].first_name, last_name: res[i].last_name, role_id: res[i].role_id, manager_id: res[i].manager_id }, name: res[i].first_name + ' ' + res[i].last_name });
+            return new Promise ((resolve, reject) => {
+            let choicesArr = [];
+            let sql = `SELECT * FROM employees`;
+            db.query(sql, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                    for (let i = 0 ; i < res.length ; i++ ) {
+                        choicesArr.push({ value: {id: res[i].id, first_name: res[i].first_name, last_name: res[i].last_name, role_id: res[i].role_id, manager_id: res[i].manager_id}, name:res[i].first_name + ' ' + res[i].last_name});
                     }
                     return resolve(choicesArr);
                 })
-
+                
             })
         },
-        when: ({ employList }) => {
+        when:({ employList }) => {
             if (employList === "Update Employee") {
                 return true;
             } else {
@@ -181,10 +174,10 @@ const employQuestions = [
     },
     {
         type: 'list',
-        name: 'updateEmployInfo',
-        message: 'What info would you like to update?',
-        choices: [`First Name`, `Last Name`, 'Role', 'Manager', 'Go Back'],
-        when: ({ updateEmployee }) => {
+        name: 'updateEmployChoice',
+        message: 'What did you want to update?',
+        choices: [`Employee First Name`, `Employee Last Name`, 'Employee Role', 'Employee Manager', 'Go Back'],
+        when: ({updateEmployee}) => {
             if (updateEmployee) {
                 return true;
             } else {
@@ -194,17 +187,17 @@ const employQuestions = [
     },
     {
         type: 'input',
-        name: 'updateFirstName',
-        message: 'What should the First Name be changed to?',
-        default: ({ updateEmployee }) => {
+        name: 'updateEmployFirstName',
+        message: 'What should the First Name be?',
+        default:  ({ updateEmployee }) => {
             if (updateEmployee) {
                 return updateEmployee.first_name;
             } else {
                 return ' ';
             }
         },
-        when: ({ updateEmplyInfo }) => {
-            if (updateEmplyInfo === `Employee First Name`) {
+        when: ({ updateEmployChoice }) => {
+            if (updateEmployChoice === `Employee First Name`) {
                 return true;
             } else {
                 return false;
@@ -213,17 +206,17 @@ const employQuestions = [
     },
     {
         type: 'input',
-        name: 'updateLastName',
-        message: "What should the Last Name be changed to?",
-        default: ({ updateEmployee }) => {
+        name: 'updateEmployLastName',
+        message: "What should the Last Name be?",
+        default:  ({ updateEmployee }) => {
             if (updateEmployee) {
                 return updateEmployee.last_name;
             } else {
                 return ' ';
             }
         },
-        when: ({ updateEmplyInfo }) => {
-            if (updateEmplyInfo === `Employee Last Name`) {
+        when: ({ updateEmployChoice }) => {
+            if (updateEmployChoice === `Employee Last Name`) {
                 return true;
             } else {
                 return false;
@@ -232,26 +225,26 @@ const employQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'updateRole',
-        message: 'What Role will the employee fill?',
+        name: 'updateEmployRole',
+        message: 'What Roll should this employee fill?',
         choices: () => {
-            return new Promise((resolve, reject) => {
-                let choicesArr = [];
-                let sql = `SELECT * FROM roles`;
-                db.query(sql, (err, res) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    for (let i = 0; i < res.length; i++) {
-                        choicesArr.push({ value: { id: res[i].id, title: res[i].title }, name: res[i].title });
+            return new Promise ((resolve, reject) => {
+            let choicesArr = [];
+            let sql = `SELECT * FROM roles`;
+            db.query(sql, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                    for (let i = 0 ; i < res.length ; i++ ) {
+                        choicesArr.push({ value: {id:res[i].id, title: res[i].title}, name: res[i].title});
                     }
                     return resolve(choicesArr);
                 })
-
+                
             })
         },
-        when: ({ updateEmplyInfo }) => {
-            if (updateEmplyInfo === 'Employee Role') {
+        when: ({ updateEmployChoice }) => {
+            if (updateEmployChoice === 'Employee Role') {
                 return true;
             } else {
                 return false;
@@ -260,26 +253,26 @@ const employQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'updateManager',
-        message: 'What Manager should this employee report to?',
+        name: 'updateEmployManager',
+        message: 'What Manager should this employee be under?',
         choices: () => {
-            return new Promise((resolve, reject) => {
-                let choicesArr = [];
-                let sql = `SELECT * FROM employees`;
-                db.query(sql, (err, res) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    for (let i = 0; i < res.length; i++) {
-                        choicesArr.push({ value: { id: res[i].id, first_name: res[i].first_name, last_name: res[i].last_name, role_id: res[i].role_id, manager_id: res[i].manager_id }, name: res[i].first_name + ' ' + res[i].last_name });
+            return new Promise ((resolve, reject) => {
+            let choicesArr = [];
+            let sql = `SELECT * FROM employees`;
+            db.query(sql, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                    for (let i = 0 ; i < res.length ; i++ ) {
+                        choicesArr.push({ value: {id: res[i].id, first_name: res[i].first_name, last_name: res[i].last_name, role_id: res[i].role_id, manager_id: res[i].manager_id}, name:res[i].first_name + ' ' + res[i].last_name});
                     }
                     return resolve(choicesArr);
                 })
-
+                
             })
         },
-        when: ({ updateEmplyInfo }) => {
-            if (updateEmplyInfo === 'Employee Manager') {
+        when: ({ updateEmployChoice }) => {
+            if (updateEmployChoice === 'Employee Manager') {
                 return true;
             } else {
                 return false;
@@ -288,27 +281,27 @@ const employQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'removeEmployee',
-        message: 'Who would you like to Remove?',
+        name: 'deleteEmployee',
+        message: 'Which Employee would you like to DELETE?',
         choices: () => {
-            return new Promise((resolve, reject) => {
-                let choicesArr = [];
-                let sql = `SELECT * FROM employees`;
-                db.query(sql, (err, res) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    for (let i = 0; i < res.length; i++) {
-                        choicesArr.push({ value: { id: res[i].id, first_name: res[i].first_name, last_name: res[i].last_name }, name: res[i].first_name + ' ' + res[i].last_name });
+            return new Promise ((resolve, reject) => {
+            let choicesArr = [];
+            let sql = `SELECT * FROM employees`;
+            db.query(sql, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                    for (let i = 0 ; i < res.length ; i++ ) {
+                        choicesArr.push({ value: {id: res[i].id, first_name: res[i].first_name, last_name: res[i].last_name}, name:res[i].first_name + ' ' + res[i].last_name});
                     }
                     choicesArr.push('Go Back');
                     return resolve(choicesArr);
                 })
-
+                
             })
         },
-        when: ({ employList }) => {
-            if (employList === "Delete an Employee") {
+        when:({ employList }) => {
+            if (employList === "Delete Employee") {
                 return true;
             } else {
                 return false;
