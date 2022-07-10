@@ -11,7 +11,7 @@ const deptQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'viewDeptSalary',
+        name: 'viewSalary',
         choices: () => {
             return new Promise ((resolve, reject) => {
             let choicesArr = [];
@@ -39,7 +39,7 @@ const deptQuestions = [
     },
     {
         type: 'input',
-        name: 'addDept',
+        name: 'addDepartment',
         message: "What is the Department's Name?",
         when: ({ departmentList }) => {
             if (departmentList === 'Add Department') {
@@ -51,7 +51,7 @@ const deptQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'updateDept',
+        name: 'updateDepartment',
         message: 'Which Department would you like to update',
         choices: () => {
             return new Promise ((resolve, reject) => {
@@ -80,13 +80,13 @@ const deptQuestions = [
     },
     {
         type: 'input',
-        name: 'yesUpdateDept',
+        name: 'yesUpdateDepartment',
         message: 'What should the name of the Department be?',
-        default: ({ updateDept }) => {
-            return updateDept.name || " ";
+        default: ({ updateDepartment }) => {
+            return updateDepartment.name || " ";
         },
-        when: ({updateDept}) => {
-            if (updateDept) {
+        when: ({updateDepartment}) => {
+            if (updateDepartment) {
                 return true;
             } else {
                 return false;
@@ -95,7 +95,7 @@ const deptQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'deleteDept',
+        name: 'deleteDepartment',
         message: 'Which Department would you like to Remove?',
         choices: () => {
             return new Promise ((resolve, reject) => {

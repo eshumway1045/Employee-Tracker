@@ -17,13 +17,13 @@ class Build {
 
 
                 if (responses.startup === 'Employee Menu') {
-                    this.employMenu();
+                    this.menuEmploy();
                 }
                 if (responses.startup === 'Role Menu') {
-                    this.roleMenu();
+                    this.menuRole();
                 }
                 if (responses.startup === 'Department Menu') {
-                    this.departmentMenu();
+                    this.menuDepartment();
                 }
                 if (responses.startup === "Exit") {
                     process.exit();
@@ -34,7 +34,7 @@ class Build {
             });
     };
 
-    employMenu() {
+    menuEmploy() {
         inquirer.prompt(eQues)
             .then((responses) => {
                 console.log(responses);
@@ -47,7 +47,7 @@ class Build {
                     })
                         .then((res) => res.json())
                         .then((data) => { console.clear(); console.log('\n\n '); console.table(data.data) })
-                        .then(this.employMenu());
+                        .then(this.menuEmploy());
 
                 }
                 if (responses.employList === "View by Manager") {
@@ -56,7 +56,7 @@ class Build {
                     })
                         .then((res) => res.json())
                         .then((data) => { console.clear(); console.log('\n\n '); console.table(data.data) })
-                        .then(this.employMenu());
+                        .then(this.menuEmploy());
                 }
                 if (responses.employList === "View by Department") {
                     fetch(`http://localhost:3001/api/deptEmployees/${responses.viewByDepartment.id}`, {
@@ -64,7 +64,7 @@ class Build {
                     })
                         .then((res) => res.json())
                         .then((data) => { console.clear(); console.log('\n\n '); console.table(data.data) })
-                        .then(this.employMenu());
+                        .then(this.menuEmploy());
                 }
                 if (responses.employList === "Add Employee") {
                     if (!responses.addEmployFirstName || !responses.addEmployLastName || !responses.addEmployRole || !responses.addEmployManager) {
@@ -78,7 +78,7 @@ class Build {
                             },
                             body: JSON.stringify(employee),
                         })
-                            .then(this.employMenu());
+                            .then(this.menuEmploy());
                     const newEmplObj = {
                         first_name: responses.addEmployFirstName,
                         last_name: responses.addEmployLastName,
@@ -91,7 +91,7 @@ class Build {
                     fetch(`http://localhost:3001/api/employee/${responses.deleteEmployee.id}`, {
                         method: 'Delete'
                     })
-                        .then(this.employMenu());
+                        .then(this.menuEmploy());
                 }
                 if (responses.employList === "Update Employee") {
                     let updateMeEmpl = (updateText) => fetch(`http://localhost:3001/api/employee/${responses.updateEmployee.id}`, {
@@ -101,7 +101,7 @@ class Build {
                         },
                         body: JSON.stringify(updateText),
                     })
-                        .then(this.employMenu());
+                        .then(this.menuEmploy());
                     let roleID = () => {
                         if (responses.updateEmployRole) {
                             return responses.updateEmployRole.id;
@@ -123,14 +123,14 @@ class Build {
                         manager_id: manID()
                     };
                     console.clear();
-                    console.log('\n\nEmployee updated to the following:');
+                    console.log('\n\nEmployee was updated to the following:');
                     console.table(updateEmployObject);
                     updateMeEmpl(updateEmployObject);
                 }
             });
     };
 
-    roleMenu() {
+    menuRole() {
         inquirer.prompt(roleQuestions)
             .then(responses => {
                 console.log(responses);
@@ -143,7 +143,7 @@ class Build {
                     })
                         .then((res) => res.json())
                         .then((data) => { console.clear(); console.log('\n\n'); console.table(data.data) })
-                        .then(this.roleMenu());
+                        .then(this.menuRole());
                 }
                 if (responses.roleList === "Add Role") {
                     if (!responses.addTitle || !responses.addSalary || !responses.addDepartment) {
@@ -157,7 +157,7 @@ class Build {
                             },
                             body: JSON.stringify(role),
                         })
-                            .then(this.roleMenu());
+                            .then(this.menuRole());
                     const newRoleObj = {
                         title: responses.addTitle,
                         salary: responses.addSalary,
@@ -174,7 +174,7 @@ class Build {
                         },
                         body: JSON.stringify(updateText),
                     })
-                        .then(this.roleMenu());
+                        .then(this.menuRole());
                     let updateRoleObject = {
                         title: responses.updateTitle || responses.updateRole.title,
                         salary: responses.updateSalary || responses.updateRole.salary,
@@ -189,12 +189,12 @@ class Build {
                     fetch(`http://localhost:3001/api/role/${responses.deleteRole.id}`, {
                         method: 'Delete'
                     })
-                        .then(this.roleMenu());
+                        .then(this.menuRole());
                 }
             })
     };
 
-    departmentMenu() {
+    menuDepartment() {
         inquirer.prompt(deptQuestions)
             .then(responses => {
                 console.log(responses);
@@ -207,19 +207,19 @@ class Build {
                     })
                         .then((res) => res.json())
                         .then((data) => { console.clear(); console.log('\n\n '); console.table(data.data) })
-                        .then(this.departmentMenu());
+                        .then(this.menuDepartment());
 
                 }
                 if (responses.departmentList === "View Salary Budget") {
-                    fetch(`http://localhost:3001/api/deptSalaries/${responses.viewDeptSalary.id}`, {
+                    fetch(`http://localhost:3001/api/deptSalaries/${responses.viewSalary.id}`, {
                         method: 'GET'
                     })
                         .then((res) => res.json())
                         .then((data) => { console.clear(); console.log('\n\n '); console.table(data.data) })
-                        .then(this.departmentMenu());
+                        .then(this.menuDepartment());
                 }
                 if (responses.departmentList === "Add Department") {
-                    if (!responses.addDept) {
+                    if (!responses.addDepartment) {
                         return;
                     }
 
@@ -231,31 +231,31 @@ class Build {
                             },
                             body: JSON.stringify(department),
                         })
-                            .then(this.departmentMenu());
-                    const newDeptObj = {
-                        name: responses.addDept
+                            .then(this.menuDepartment());
+                    const newDepartmentObject = {
+                        name: responses.addDepartment
                     }
-                    add(newDeptObj);
+                    add(newDepartmentObject);
                 }
                 if (responses.departmentList === "Delete Department") {
-                    fetch(`http://localhost:3001/api/department/${responses.deleteDept.id}`, {
+                    fetch(`http://localhost:3001/api/department/${responses.deleteDepartment.id}`, {
                         method: 'Delete'
                     })
-                        .then(this.departmentMenu());
+                        .then(this.menuDepartment());
                 }
                 if (responses.departmentList === "Update Department") {
-                    let updateMe = (updateText) => fetch(`http://localhost:3001/api/department/${responses.updateDept.id}`, {
+                    let updateMe = (updateText) => fetch(`http://localhost:3001/api/department/${responses.updateDepartment.id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': "application/json"
                         },
                         body: JSON.stringify(updateText),
                     })
-                        .then(this.departmentMenu());
-                    let updateDeptObject = {
-                        name: responses.yesUpdateDept
+                        .then(this.menuDepartment());
+                    let updateDepartmentObject = {
+                        name: responses.yesUpdateDepartment
                     }
-                    updateMe(updateDeptObject);
+                    updateMe(updateDepartmentObject);
 
                 }
             })
