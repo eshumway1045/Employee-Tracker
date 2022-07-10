@@ -6,15 +6,15 @@ const roleQuestions = [
         type: 'list',
         name: 'roleList',
         message: 'What would you like to do?',
-        choices: ['View Roles', 'Add a Role', 'Update a Role', 'Delete a Role', 'Go Back'],
+        choices: ['View Roles', 'Add Role', 'Update Role', 'Delete Role', 'Go Back'],
         default: 'View all Roles'
     },
     {
         type: 'input',
         name: 'addTitle',
-        message: "What would you like the role to be called?",
+        message: "What is the role's Title?",
         when: ({ roleList }) => {
-            if (roleList === 'Add a Role') {
+            if (roleList === 'Add Role') {
                 return true;
             } else {
                 return false;
@@ -24,9 +24,9 @@ const roleQuestions = [
     {
         type: 'number',
         name: 'addSalary',
-        message: "What is the salary of this role?",
+        message: "What is the role's Salary?",
         when: ({ roleList }) => {
-            if (roleList === 'Add a Role') {
+            if (roleList === 'Add Role') {
                 return true;
             } else {
                 return false;
@@ -36,7 +36,7 @@ const roleQuestions = [
     {
         type: 'rawlist',
         name: 'addDepartment',
-        message: "What is the Department does this role belong to?",
+        message: "What is the Department for the role?",
         choices: () => {
             return new Promise ((resolve, reject) => {
             let choicesArr = [];
@@ -54,7 +54,7 @@ const roleQuestions = [
             })
         },
         when: ({ roleList }) => {
-            if (roleList === 'Add a Role') {
+            if (roleList === 'Add Role') {
                 return true;
             } else {
                 return false;
@@ -63,8 +63,8 @@ const roleQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'update',
-        message: 'Which Role would you like to modify',
+        name: 'updateRole',
+        message: 'Which role would you like to update',
         choices: () => {
             return new Promise ((resolve, reject) => {
             let choicesArr = [];
@@ -82,7 +82,7 @@ const roleQuestions = [
             })
         },
         when:({ roleList }) => {
-            if (roleList === "Update a Role") {
+            if (roleList === "Update Role") {
                 return true;
             } else {
                 return false;
@@ -91,9 +91,9 @@ const roleQuestions = [
     },
     {
         type: 'list',
-        name: 'updateChoice',
+        name: 'updateRoleChoice',
         message: 'What did you want to update?',
-        choices: ['Title', 'Salary', 'Department'],
+        choices: ['Role Title', 'Role Salary', 'Role Department'],
         when: ({updateRole}) => {
             if (updateRole) {
                 return true;
@@ -105,7 +105,7 @@ const roleQuestions = [
     {
         type: 'input',
         name: 'updateTitle',
-        message: 'What should the new Title be?',
+        message: 'What should the Role Title be?',
         default:  ({ updateRole }) => {
             if (updateRole.title) {
                 return updateRole.title;
@@ -124,7 +124,7 @@ const roleQuestions = [
     {
         type: 'number',
         name: 'updateSalary',
-        message: "What should the new Salary be?",
+        message: "What should this role's Salary be?",
         default: ({updateRole}) => {
            if (updateRole.salary) {
                return updateRole.salary;
@@ -170,8 +170,8 @@ const roleQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'delete',
-        message: 'Which Role would you like to REMOVE?',
+        name: 'deleteRole',
+        message: 'Which Role would you like to DELETE?',
         choices: () => {
             return new Promise ((resolve, reject) => {
             let choicesArr = [];
@@ -190,7 +190,7 @@ const roleQuestions = [
             })
         },
         when:({ roleList }) => {
-            if (roleList === "Delete a Role") {
+            if (roleList === "Delete Role") {
                 return true;
             } else {
                 return false;

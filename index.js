@@ -137,7 +137,7 @@ class Build {
                 if (responses.roleList === "Go Back") {
                     this.initialize();
                 }
-                if (responses.roleList === "View all Roles") {
+                if (responses.roleList === "View Roles") {
                     fetch('http://localhost:3001/api/roles', {
                         method: 'GET'
                     })
@@ -145,8 +145,8 @@ class Build {
                         .then((data) => { console.clear(); console.log('\n\n'); console.table(data.data) })
                         .then(this.roleMenu());
                 }
-                if (responses.roleList === "Add a Role") {
-                    if (!responses.addRoleTitle || !responses.addRoleSalary || !responses.addRoleDept) {
+                if (responses.roleList === "Add Role") {
+                    if (!responses.addTitle || !responses.addSalary || !responses.addDepartment) {
                         return;
                     }
                     const addMeRole = (role) =>
@@ -159,19 +159,14 @@ class Build {
                         })
                             .then(this.roleMenu());
                     const newRoleObj = {
-                        title: responses.addRoleTitle,
-                        salary: responses.addRoleSalary,
-                        department_id: responses.addRoleDept.id
+                        title: responses.addTitle,
+                        salary: responses.addSalary,
+                        department_id: responses.addDepartment.id
                     }
                     addMeRole(newRoleObj);
                 }
-                if (responses.roleList === "Delete a Role") {
-                    fetch(`http://localhost:3001/api/role/${responses.deleteRole.id}`, {
-                        method: 'Delete'
-                    })
-                        .then(this.roleMenu());
-                }
-                if (responses.roleList === "Update a Role") {
+
+                if (responses.roleList === "Update Role") {
                     let updateMeRole = (updateText) => fetch(`http://localhost:3001/api/role/${responses.updateRole.id}`, {
                         method: 'PUT',
                         headers: {
@@ -180,15 +175,21 @@ class Build {
                         body: JSON.stringify(updateText),
                     })
                         .then(this.roleMenu());
-                    let updateRoleObj = {
-                        title: responses.updateRoleTitle || responses.updateRole.title,
-                        salary: responses.updateRoleSalary || responses.updateRole.salary,
-                        department_id: responses.updateRoleDept || responses.updateRole.department_id
+                    let updateRoleObject = {
+                        title: responses.updateTitle || responses.updateRole.title,
+                        salary: responses.updateSalary || responses.updateRole.salary,
+                        department_id: responses.updateDepartment || responses.updateRole.department_id
                     };
                     console.clear();
                     console.log('\n\nRole updated to the following:');
-                    console.table(updateRoleObj);
-                    updateMeRole(updateRoleObj);
+                    console.table(updateRoleObject);
+                    updateMeRole(updateRoleObject);
+                }
+                if (responses.roleList === "Delete Role") {
+                    fetch(`http://localhost:3001/api/role/${responses.deleteRole.id}`, {
+                        method: 'Delete'
+                    })
+                        .then(this.roleMenu());
                 }
             })
     };
