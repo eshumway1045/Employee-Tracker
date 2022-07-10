@@ -198,10 +198,10 @@ class Build {
         inquirer.prompt(deptQuestions)
             .then(responses => {
                 console.log(responses);
-                if (responses.deptList === "Go Back") {
+                if (responses.departmentList === "Go Back") {
                     this.initialize();
                 }
-                if (responses.deptList === "View All Departments") {
+                if (responses.departmentList === "View Departments") {
                     fetch('http://localhost:3001/api/departments', {
                         method: 'GET'
                     })
@@ -210,7 +210,7 @@ class Build {
                         .then(this.departmentMenu());
 
                 }
-                if (responses.deptList === "View Department Salary Budget") {
+                if (responses.departmentList === "View Salary Budget") {
                     fetch(`http://localhost:3001/api/deptSalaries/${responses.viewDeptSalary.id}`, {
                         method: 'GET'
                     })
@@ -218,7 +218,7 @@ class Build {
                         .then((data) => { console.clear(); console.log('\n\n '); console.table(data.data) })
                         .then(this.departmentMenu());
                 }
-                if (responses.deptList === "Add a Department") {
+                if (responses.departmentList === "Add Department") {
                     if (!responses.addDept) {
                         return;
                     }
@@ -237,13 +237,13 @@ class Build {
                     }
                     add(newDeptObj);
                 }
-                if (responses.deptList === "Delete a Department") {
+                if (responses.departmentList === "Delete Department") {
                     fetch(`http://localhost:3001/api/department/${responses.deleteDept.id}`, {
                         method: 'Delete'
                     })
                         .then(this.departmentMenu());
                 }
-                if (responses.deptList === "Update a Department") {
+                if (responses.departmentList === "Update Department") {
                     let updateMe = (updateText) => fetch(`http://localhost:3001/api/department/${responses.updateDept.id}`, {
                         method: 'PUT',
                         headers: {

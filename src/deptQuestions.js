@@ -5,13 +5,13 @@ const deptQuestions = [
     {
         type: 'list',
         name: 'departmentList',
-        message: 'What would you like to do?',
-        choices: ['View All Departments', 'View Salary Budget', 'Add Department', 'Update Department', 'Delete Department', 'Go Back'],
+        message: 'What do you need?',
+        choices: ['View Departments', 'View Salary Budget', 'Add Department', 'Update Department', 'Delete Department', 'Go Back'],
         default: 'View All Departments'
     },
     {
         type: 'rawlist',
-        name: 'viewSalary',
+        name: 'viewDeptSalary',
         choices: () => {
             return new Promise ((resolve, reject) => {
             let choicesArr = [];
@@ -30,7 +30,7 @@ const deptQuestions = [
             })
         },
         when:({ departmentList }) => {
-            if (departmentList === "View  Salary Budget") {
+            if (departmentList === "View Salary Budget") {
                 return true;
             } else {
                 return false;
@@ -39,10 +39,10 @@ const deptQuestions = [
     },
     {
         type: 'input',
-        name: 'addDepartment',
-        message: "What is the Name of the Department you would like to add?",
-        when: ({ DepartmentList }) => {
-            if (DepartmentList === 'Add a Department') {
+        name: 'addDept',
+        message: "What is the Department's Name?",
+        when: ({ departmentList }) => {
+            if (departmentList === 'Add Department') {
                 return true;
             } else {
                 return false;
@@ -51,8 +51,8 @@ const deptQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'updateDepartment',
-        message: 'What is the name of the Department would you like to update',
+        name: 'updateDept',
+        message: 'Which Department would you like to update',
         choices: () => {
             return new Promise ((resolve, reject) => {
             let choicesArr = [];
@@ -70,8 +70,8 @@ const deptQuestions = [
                 
             })
         },
-        when:({ DepartmentList }) => {
-            if (DepartmentList === "Update a Department") {
+        when:({ departmentList }) => {
+            if (departmentList === "Update Department") {
                 return true;
             } else {
                 return false;
@@ -80,13 +80,13 @@ const deptQuestions = [
     },
     {
         type: 'input',
-        name: 'yesUpdateDepartment',
-        message: 'What would you like to change the name of the Department to be?',
-        default: ({ updateDepartment }) => {
-            return updateDepartment.name || " ";
+        name: 'yesUpdateDept',
+        message: 'What should the name of the Department be?',
+        default: ({ updateDept }) => {
+            return updateDept.name || " ";
         },
-        when: ({updateDepartment}) => {
-            if (updateDepartment) {
+        when: ({updateDept}) => {
+            if (updateDept) {
                 return true;
             } else {
                 return false;
@@ -95,8 +95,8 @@ const deptQuestions = [
     },
     {
         type: 'rawlist',
-        name: 'deleteDepartment',
-        message: 'What Department would you like to Remove?',
+        name: 'deleteDept',
+        message: 'Which Department would you like to Remove?',
         choices: () => {
             return new Promise ((resolve, reject) => {
             let choicesArr = [];
@@ -115,8 +115,8 @@ const deptQuestions = [
                 
             })
         },
-        when:({ DepartmentList }) => {
-            if (DepartmentList === "Delete a Department") {
+        when:({ departmentList }) => {
+            if (departmentList === "Delete Department") {
                 return true;
             } else {
                 return false;
