@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 const { startUp } = require('./src/startUp');
 const { deptQuestions } = require('./src/deptQuestions');
 const { roleQuestions } = require('./src/roleQuestions');
-const { employQuestions: eQues } = require('./src/employQuestions');
+const { employQuestions } = require('./src/employQuestions');
 
 
 class Build {
@@ -35,7 +35,7 @@ class Build {
     };
 
     menuEmploy() {
-        inquirer.prompt(eQues)
+        inquirer.prompt(employQuestions)
             .then((responses) => {
                 console.log(responses);
                 if (responses.employList === "Go Back") {
